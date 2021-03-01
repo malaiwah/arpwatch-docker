@@ -5,7 +5,7 @@ RUN apt update && apt-get -y install python3 arpwatch nullmailer rsyslog ca-cert
 RUN curl -sSLf https://raw.githubusercontent.com/frispete/fetch-ethercodes/master/fetch_ethercodes.py -o /usr/local/bin/fetch_ethercodes.py && \
     chmod +x /usr/local/bin/fetch_ethercodes.py
 
-RUN mkdir -p /usr/share/arpwatch && fetch_ethercodes.py -o /usr/share/arpwatch/ethercodes.dat
+RUN mkdir -p /usr/share/arpwatch
 
 ADD cmd.sh /cmd.sh
 ADD rsyslog.conf /rsyslog.conf

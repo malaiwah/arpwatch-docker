@@ -74,6 +74,8 @@ touch /var/lib/arpwatch/arp.dat
 touch /var/lib/arpwatch/arp.dat.new
 chmod -R 777 /var/lib/arpwatch
 
+/usr/local/bin/fetch_ethercodes.py -o /usr/share/arpwatch/ethercodes.dat
+
 # run rsyslogd to catch cron messages
 rm -f /var/run/rsyslogd.pid
 rsyslogd -f /rsyslog.conf
