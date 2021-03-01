@@ -1,18 +1,13 @@
-FROM balenalib/raspberrypi3 AS builder
+FROM ubuntu:latest
 
-RUN install_packages python3
+RUN apt update && apt-get -y install python3 arpwatch nullmailer rsyslog ca-certificates psmisc curl net-tools
 
 RUN curl -sSLf https://raw.githubusercontent.com/frispete/fetch-ethercodes/master/fetch_ethercodes.py -o /usr/local/bin/fetch_ethercodes.py && \
     chmod +x /usr/local/bin/fetch_ethercodes.py
 
-RUN fetch_ethercodes.py -o /ethercodes.dat
-
-FROM balenalib/raspberrypi3
-
-RUN install_packages arpwatch nullmailer rsyslog ca-certificates psmisc
+RUN mkdir -p /usr/share/arpwatch && fetch_ethercodes.py -o /usr/share/arpwatch/ethercodes.dat
 
 ADD cmd.sh /cmd.sh
 ADD rsyslog.conf /rsyslog.conf
-COPY --from=builder /ethercodes.dat /usr/share/arpwatch/ethercodes.dat
 
 CMD ["bash", "cmd.sh"]
